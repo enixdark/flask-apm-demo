@@ -9,3 +9,10 @@
 3. To build docker image `docker build -t todo-flask:latest .`
 4. To run the docker container `docker run -it -p 5000:8888 todo-flask `
 
+### test feature flag
+
+- Tun app in your local: `python app/app.py`
+- Then turn on/off your flag from feature flag server
+- finally , use curl for testing. 
+
+`curl -H "userId: example@vccloud.vn" http://127.0.0.1:8888`
