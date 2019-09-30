@@ -1,1 +1,1 @@
-web: python app/app.py
+web: PORT=5000 python app/app.py

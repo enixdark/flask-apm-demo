@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from service import ToDoService
 from models import Schema
-
+import os
 import json
 
 from UnleashClient import UnleashClient
@@ -75,5 +75,5 @@ def delete_item(item_id):
 
 if __name__ == "__main__":
     Schema()
-    app.run('0.0.0.0', debug=True, port=5000)
+    app.run('0.0.0.0', debug=True, port=int(os.getenv('PORT', 5000)))
     #app.run(debug=True, port=8888)
