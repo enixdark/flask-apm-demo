@@ -42,7 +42,7 @@ def add_headers(response):
 @app.route("/")
 def hello():
     app_context = {"userId": request.headers.get('Userid', None)}
-    if client.is_enabled('test', app_context):
+    if client.is_enabled('test2', app_context):
         return "Hello Test"
     else:
         return "Hello World!"
@@ -76,4 +76,4 @@ def delete_item(item_id):
 if __name__ == "__main__":
     Schema()
     app.run('0.0.0.0', debug=True, port=int(os.getenv('PORT', 8080)))
-    #app.run(debug=True, port=8888)
+    # app.run(debug=True, port=8888)flyn
