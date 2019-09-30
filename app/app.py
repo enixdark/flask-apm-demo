@@ -7,8 +7,28 @@ import json
 from UnleashClient import UnleashClient
 client = UnleashClient("https://feature-flag.vccloud.vn/api", "unleash-server")
 client.initialize_client()
+from elasticapm.contrib.flask import ElasticAPM
 
 app = Flask(__name__)
+apm = ElasticAPM(app)
+
+# or configure to use ELASTIC_APM in your application's settings
+app.config['ELASTIC_APM'] = {
+    # Set required service name. Allowed characters:
+    # a-z, A-Z, 0-9, -, _, and space
+    'SERVICE_NAME': 'flask-example',
+
+    # Use if APM Server requires a token
+    'SECRET_TOKEN': 'ticket123##',
+
+    # Set custom APM Server URL (default: http://localhost:8200)
+    'SERVER_URL': 'http://10.3.112.38:8200',
+    # 'DEBUG': True
+}
+
+
+apm = ElasticAPM(app)
+apm.capture_message('hello elastic apm')
 
 
 @app.after_request
@@ -55,4 +75,5 @@ def delete_item(item_id):
 
 if __name__ == "__main__":
     Schema()
-    app.run(debug=True, port=8888)
+    app.run(debug=True, port=80)
+    #app.run(debug=True, port=8888)
