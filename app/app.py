@@ -7,10 +7,10 @@ import json
 from UnleashClient import UnleashClient
 client = UnleashClient("https://feature-flag.vccloud.vn/api", "unleash-server")
 client.initialize_client()
-from elasticapm.contrib.flask import ElasticAPM
+# from elasticapm.contrib.flask import ElasticAPM
 
 app = Flask(__name__)
-apm = ElasticAPM(app)
+# apm = ElasticAPM(app)
 
 # or configure to use ELASTIC_APM in your application's settings
 # app.config['ELASTIC_APM'] = {
