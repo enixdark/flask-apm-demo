@@ -4,13 +4,13 @@ from models import Schema
 import os
 import json
 
-from UnleashClient import UnleashClient
-client = UnleashClient("https://feature-flag.vccloud.vn/api", "unleash-server")
-client.initialize_client()
-from elasticapm.contrib.flask import ElasticAPM
+#from UnleashClient import UnleashClient
+#client = UnleashClient("https://feature-flag.vccloud.vn/api", "unleash-server")
+#client.initialize_client()
+#from elasticapm.contrib.flask import ElasticAPM
 
-app = Flask(__name__)
-apm = ElasticAPM(app)
+#app = Flask(__name__)
+#apm = ElasticAPM(app)
 
 # or configure to use ELASTIC_APM in your application's settings
 app.config['ELASTIC_APM'] = {
@@ -43,11 +43,11 @@ def add_headers(response):
 
 @app.route("/")
 def hello():
-    app_context = {"userId": request.headers.get('Userid', None)}
-    if client.is_enabled('test', app_context):
-        return "Hello Test"
-    else:
-        return "Hello World!"
+    #app_context = {"userId": request.headers.get('Userid', None)}
+    #if client.is_enabled('test', app_context):
+    #    return "Hello Test"
+    #else:
+    return "Hello World!"
 
 
 @app.route("/<name>")
