@@ -60,7 +60,7 @@ class ToDoModel:
         return self.list_items(where_clause)
 
     def create(self, params):
-        print (params)
+        print(params)
         query = f'insert into {self.TABLENAME} ' \
                 f'(Title, Description, DueDate, UserId) ' \
                 f'values ("{params.get("Title")}","{params.get("Description")}",' \
@@ -72,7 +72,7 @@ class ToDoModel:
         query = f"UPDATE {self.TABLENAME} " \
                 f"SET _is_deleted =  {1} " \
                 f"WHERE id = {item_id}"
-        print (query)
+        print(query)
         self.conn.execute(query)
         return self.list_items()
 
@@ -82,7 +82,7 @@ class ToDoModel:
         Title: new title
         """
         set_query = " ".join([f'{column} = {value}'
-                     for column, value in update_dict.items()])
+                              for column, value in update_dict.items()])
 
         query = f"UPDATE {self.TABLENAME} " \
                 f"SET {set_query} " \
@@ -93,10 +93,10 @@ class ToDoModel:
     def list_items(self, where_clause=""):
         query = f"SELECT id, Title, Description, DueDate, _is_done " \
                 f"from {self.TABLENAME} WHERE _is_deleted != {1} " + where_clause
-        print (query)
+        print(query)
         result_set = self.conn.execute(query).fetchall()
         result = [{column: row[i]
-                  for i, column in enumerate(result_set[0].keys())}
+                   for i, column in enumerate(result_set[0].keys())}
                   for row in result_set]
         return result
 
@@ -110,4 +110,3 @@ class User:
                 f'values ({name},{email})'
         result = self.conn.execute(query)
         return result
-
