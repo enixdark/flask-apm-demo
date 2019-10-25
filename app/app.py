@@ -4,33 +4,26 @@ from models import Schema
 import os
 import json
 
-#from UnleashClient import UnleashClient
-#client = UnleashClient("https://feature-flag.vccloud.vn/api", "unleash-server")
-#client.initialize_client()
-#from elasticapm.contrib.flask import ElasticAPM
+from elasticapm.contrib.flask import ElasticAPM
 
-#app = Flask(__name__)
-#apm = ElasticAPM(app)
+app = Flask(__name__)
+apm = ElasticAPM(app)
 
 # or configure to use ELASTIC_APM in your application's settings
 app.config['ELASTIC_APM'] = {
     # Set required service name. Allowed characters:
     # a-z, A-Z, 0-9, -, _, and space
-    'SERVICE_NAME': 'flask-example',
-
-    # Use if APM Server requires a token
-    # 'SECRET_TOKEN': 'ticket123##',
-    'SECRET_TOKEN': 'Vcc123123',
-
-    # Set custom APM Server URL (default: http://localhost:8200)
-    # 'SERVER_URL': 'http://10.3.112.38:8200',
-    'SERVER_URL': 'http://10.5.69.43:8200',
+    'SERVICE_NAME': '',
+    'SECRET_TOKEN': '',  # auth token to apm server
+    'EXTRA_SANITIZE_FIELD_NAMES': ["data", "authorization", "password", "secret", "passwd", "token", "api_key", "access_token", "sessionid"],  # this option allow override sensitive fields
+    'COLLECT_LOCAL_VARIABLES': 'transactions',
+    'SERVER_URL': ',
+    ''
     'DEBUG': True
 }
 
 
 apm = ElasticAPM(app)
-# apm.capture_message('hello elastic apm')
 
 
 @app.after_request
@@ -43,10 +36,6 @@ def add_headers(response):
 
 @app.route("/")
 def hello():
-    #app_context = {"userId": request.headers.get('Userid', None)}
-    #if client.is_enabled('test', app_context):
-    #    return "Hello Test"
-    #else:
     return "Hello World!"
 
 
@@ -60,8 +49,15 @@ def list_todo():
     return jsonify(ToDoService().list())
 
 
+@app.route("/test", methods=["POST"])
+def create_test():
+    return jsonify({'data': 'test'})
+
+
 @app.route("/todo", methods=["POST"])
 def create_todo():
+    import requests
+    requests.post('http://localhost:8080/test', data={'filename': 'ok'})
     return jsonify(ToDoService().create(request.get_json()))
 
 
